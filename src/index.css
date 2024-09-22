@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://img.freepik.com/free-photo/ingredients-cabbage-carrot-pie-cabbage-carrots-eggs-flour-milk-butter-spices-white-background_127032-2819.jpg?w=900&t=st=1726943005~exp=1726943605~hmac=ba0da973033b3f3e2c791fb5ed60e6c90160d09019e4ee028002ff554c492a45');
+  background-size: cover; /* This makes the image cover the entire screen */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevents image repetition */
+  height: 100vh;
+}
+img {
+  opacity: 0.2;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
