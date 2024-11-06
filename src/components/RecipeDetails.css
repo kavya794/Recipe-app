@@ -1,0 +1,65 @@
+/* Parent container for centering */
+.tile-container {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    background-image: url('https://img.freepik.com/free-photo/ingredients-cabbage-carrot-pie-cabbage-carrots-eggs-flour-milk-butter-spices-white-background_127032-2819.jpg?w=900&t=st=1726943005~exp=1726943605~hmac=ba0da973033b3f3e2c791fb5ed60e6c90160d09019e4ee028002ff554c492a45');
+    background-size: cover; /* This makes the image cover the entire screen */
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+  
+  .recipe-tile {
+    border: 1px solid #ddd; /* Light border */
+     border-radius: 8px; /*Rounded corners */
+    padding: 20px; /*Spacing inside the card*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background */
+    max-width: 400px; /* Maximum width for the card */
+    /* max-height: 300px; */
+    text-align: center; /* Center text alignment */
+    margin: 20px; /* Margin around the tile */
+  }
+  
+  .recipe-image {
+    width: 100px; /* Small size for the image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px; /* Slight rounding of the image */
+    margin-bottom: 15px; /* Space below the image */
+  }
+  
+  .download-button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 12px; /* Padding for button */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth background color transition */
+  }
+  
+  .download-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .comments-section {
+    margin-top: 20px; /* Space above comments section */
+    text-align: left; /* Left align comments text */
+  }
+  
+  .close-button {
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 12px; /* Padding for button */
+    cursor: pointer; /* Pointer cursor */
+    margin-top: 10px; /* Space above the button */
+    transition: background-color 0.3s; /* Smooth background color transition */
+  }
+  
+  .close-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+  }
+  

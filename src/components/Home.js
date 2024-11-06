@@ -1,74 +1,58 @@
+// src/components/Home.js
 import React, { useEffect, useState } from 'react';
-import { database } from '../firebase'; // Import Firebase config
-import { ref, onValue } from "firebase/database"; // For Realtime Database
+import { firestore } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
+import { analyzeRecipe } from '../nlp'; // Import the NLP analysis function
 import './Home.css';
 
 function Home() {
-  const [recipes, setRecipes] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [recipes, setRecipes] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showRecipes, setShowRecipes] = useState(true);
 
-  useEffect(() => {
-    const recipesRef = ref(database, 'recipes/');
-    onValue(recipesRef, (snapshot) => {
-      const data = snapshot.val();
-      const recipesList = [];
-      for (let id in data) {
-        recipesList.push({ id, ...data[id] });
-      }
-      setRecipes(recipesList);
-    });
-  }, []);
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            const recipesCollection = collection(firestore, 'recipes');
+            const recipeSnapshot = await getDocs(recipesCollection);
+            const recipesList = recipeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setRecipes(recipesList);
+        };
 
-  const filteredRecipes = recipes.filter(recipe => 
-    recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+        fetchRecipes();
+    }, []);
 
-  const handleRecipeClick = (recipe) => {
-    setSelectedRecipe(recipe);
-  };
+    const filteredRecipes = searchTerm
+        ? analyzeRecipe(recipes, searchTerm)
+        : recipes;
 
-  const handleCloseDetails = () => {
-    setSelectedRecipe(null);
-  };
-
-  return (
-    <div className="home-container">
-      <h1 className="welcome-message">Welcome to the Recipe Sharing Platform!</h1>
-      <div className="search-bar">
-        <input 
-          type="text" 
-          placeholder="Search recipes..." 
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
-        />
-        <button>Search</button>
-      </div>
-      <ul className="recipe-list">
-        {filteredRecipes.map(recipe => (
-          <li 
-            key={recipe.id} 
-            className="recipe-item" 
-            onClick={() => handleRecipeClick(recipe)}
-          >
-            {recipe.name}
-          </li>
-        ))}
-      </ul>
-
-      {selectedRecipe && (
-        <div className="recipe-details">
-          <button onClick={handleCloseDetails}>Close</button>
-          <h2>{selectedRecipe.name}</h2>
-          <img src={selectedRecipe.image} alt={selectedRecipe.name} />
-          <p><strong>Instructions:</strong></p>
-          <a href={selectedRecipe.instructions} download>
-            Download Instructions
-          </a>
+    return (
+        <div className="home-container">
+            <h1 className="welcome-message">Welcome to the Recipe Sharing Platform!</h1>
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Search recipes..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button onClick={() => setShowRecipes(!showRecipes)}>
+                    {showRecipes ? 'Close' : 'Show Recipes'}
+                </button>
+            </div>
+            {showRecipes && (
+                <ul className="recipe-list">
+                    {filteredRecipes.map(recipe => (
+                        <li key={recipe.id} className="recipe-item">
+                            <Link to={`/recipe/${recipe.id}`}>
+                                {recipe.name} - Rating: {recipe.rating || 'N/A'}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default Home;

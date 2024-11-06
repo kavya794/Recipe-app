@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-
 function Navbar({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     onLogout();
-    navigate('/'); // Redirect to home page after logging out
+    navigate('/');
   };
-
   return (
     <nav className="navbar">
       <Link to="/">Home</Link>
